@@ -54,3 +54,7 @@ code {
   display: flex;
   height: 400px;
 }
+span{
+  font-size: small;
+  color: red;
+}

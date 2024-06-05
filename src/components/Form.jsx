@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -34,10 +34,11 @@ const Form = () => {
 
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const navigate = useNavigate();
 
-  const validate = () => {
+  const validateForm = () => {
     const newErrors = {};
     if (!formData.firstName) newErrors.firstName = 'First Name is required';
     if (!formData.lastName) newErrors.lastName = 'Last Name is required';
@@ -49,7 +50,8 @@ const Form = () => {
     if (!formData.city) newErrors.city = 'City is required';
     if (!formData.panNo) newErrors.panNo = 'Pan No. is required';
     if (!formData.aadharNo) newErrors.aadharNo = 'Aadhar No. is required';
-    return newErrors;
+    setErrors(newErrors);
+    setIsFormValid(Object.keys(newErrors).length === 0);
   };
 
   const handleChange = (e) => {
@@ -61,14 +63,15 @@ const Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newErrors = validate();
-    if (Object.keys(newErrors).length === 0) {
+    validateForm();
+    if (isFormValid) {
       navigate('/success', { state: { formData } });
-    } else {
-      setErrors(newErrors);
     }
   };
 
+  useEffect(() => {
+    validateForm();
+  }, [formData]);
   return (
     <div class='main-div' >
         <form onSubmit={handleSubmit}>
@@ -120,7 +123,7 @@ const Form = () => {
         </div>
         <div>
             <label>Country Code:</label>
-            <input type="text" name="countryCode" value={ formData.countryCode = countryCode[formData.country]} onChange={handleChange} />
+            <input type="text" name="countryCode" value={ formData.countryCode = countryCode[formData.country]} onChange={handleChange} disabled={!formData.country} />
         </div>
 
         <div>
@@ -141,7 +144,7 @@ const Form = () => {
             <input type="text" name="aadharNo" value={formData.aadharNo} onChange={handleChange} />
             {errors.aadharNo && <span>{errors.aadharNo}</span>}
         </div>
-        <button type="submit" disabled={Object.keys(errors).length > 0}>
+        <button type="submit" disabled={!isFormValid}>
             Submit
         </button>
         </form>
