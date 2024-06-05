@@ -58,3 +58,7 @@ span{
   font-size: small;
   color: red;
 }
+.code{
+  width: 30px;
+  align-items: center;
+}

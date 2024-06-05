@@ -2,19 +2,18 @@ import React, { useState ,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-const countries = ["India", "USA", "Canada", "Australia"]; // Add more countries as needed
+const countries = ["India", "USA", "Canada", "Australia"]; 
 const cities = {
   India: ["Mumbai", "Delhi", "Bangalore"],
   USA: ["New York", "Los Angeles", "Chicago"],
   Canada: ["Toronto", "Vancouver", "Montreal"],
   Australia: ["Sydney", "Melbourne", "Brisbane"],
-  // Add more cities as needed
 };
 const countryCode = {
-    India :"IN - 91",
-    USA: "USA - 1",
-    Canada:"CAN - 1",
-    Australia:"AUS - 61",
+    India : "+91",
+    USA: "+1",
+    Canada:"+1",
+    Australia:"+61",
 }
 
 const Form = () => {
@@ -109,11 +108,6 @@ const Form = () => {
             {errors.password && <span>{errors.password}</span>}
         </div>
         <div>
-            <label>Phone No.:</label>
-            <input type="text" name="phoneNo" value={formData.phoneNo} onChange={handleChange} />
-            {errors.phoneNo && <span>{errors.phoneNo}</span>}
-        </div>
-        <div>
             <label>Country:</label>
             <input type="text" name="country" value={formData.country} onChange={handleChange} list="country-list" />
             <datalist id="country-list">
@@ -122,17 +116,18 @@ const Form = () => {
             {errors.country && <span>{errors.country}</span>}
         </div>
         <div>
-            <label>Country Code:</label>
-            <input type="text" name="countryCode" value={ formData.countryCode = countryCode[formData.country]} onChange={handleChange} disabled={!formData.country} />
-        </div>
-
-        <div>
             <label>City:</label>
-            <input type="text" name="city" value={formData.city} onChange={handleChange} list="city-list" />
+            <input type="text" name="city" value={formData.city} onChange={handleChange} list="city-list" disabled={!formData.country}/>
             <datalist id="city-list">
             {formData.country && cities[formData.country] && cities[formData.country].map((city) => ( <option key={city} value={city} />))}
             </datalist>
             {errors.city && <span>{errors.city}</span>}
+        </div>
+        <div>
+            <label>Phone No.:</label>
+            <input type="text" name="countryCode" class="code" value={ formData.countryCode = countryCode[formData.country]} onChange={handleChange} disabled={!formData.country} />
+            <input type="tel" name="phoneNo" value={formData.phoneNo} onChange={handleChange} />
+            {errors.phoneNo && <span>{errors.phoneNo}</span>}
         </div>
         <div>
             <label>PAN : </label>
@@ -141,10 +136,10 @@ const Form = () => {
         </div>
         <div>
             <label>Aadhar: </label>
-            <input type="text" name="aadharNo" value={formData.aadharNo} onChange={handleChange} />
+            <input type="number" name="aadharNo" value={formData.aadharNo} onChange={handleChange} size={10}/>
             {errors.aadharNo && <span>{errors.aadharNo}</span>}
         </div>
-        <button type="submit" disabled={!isFormValid}>
+        <button type="submit" disabled={!isFormValid && FormData.length==0}>
             Submit
         </button>
         </form>

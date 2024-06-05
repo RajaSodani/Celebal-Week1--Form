@@ -13,13 +13,12 @@ const Success = () => {
         <div>
           <h2>Form Submission Successful</h2>
           <ul>
-              <li >First Name: {formData.firstName}</li>
+              <li>First Name: {formData.firstName}</li>
               <li>Last Name: {formData.lastName}</li>
               <li>Username: {formData.username}</li>
               <li>Email: {formData.email}</li>
-              <li>Phone No.: {formData.phoneNo}</li>
+              <li>Phone No.:{formData.countryCode} {formData.phoneNo}</li>
               <li>Country: {formData.country}</li>
-              <li>CountryCode: {formData.countryCode}</li>
               <li>City: {formData.city}</li>
               <li>Pan No.: {formData.panNo}</li>
               <li>Aadhar No.: {formData.aadharNo}</li>
